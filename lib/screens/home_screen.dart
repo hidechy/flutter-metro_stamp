@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:station_stamp/screens/not_get_map_screen.dart';
 
 import '../viewmodel/station_stamp_notifier.dart';
 import 'stamp_screen.dart';
@@ -40,6 +41,34 @@ class HomeScreen extends ConsumerWidget {
               return Tab(text: tab.label);
             }).toList(),
           ),
+          actions: <Widget>[
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NotGetMapScreen(),
+                        ),
+                      );
+                    },
+                    child: SizedBox(
+                      width: 60,
+                      child: Column(
+                        children: const [
+                          Icon(Icons.map),
+                          Text('Not Get'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
           backgroundColor: Colors.transparent,
           flexibleSpace: Stack(
             children: [
@@ -73,6 +102,8 @@ class HomeScreen extends ConsumerWidget {
 
   ///
   void makeScreenTab() {
+    tabBodyList = [];
+
     final stationStampState = _ref.watch(stationStampProvider);
 
     final keepTrain = <String>[];
