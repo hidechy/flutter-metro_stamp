@@ -45,7 +45,7 @@ flutter:
     - assets/images/
 
 flutter_native_splash:
-  image: "assets/images/playbutton.png"
+  image: "assets/images/train.jpeg"
   color: "ffffff"
 
 flutter_icons:
