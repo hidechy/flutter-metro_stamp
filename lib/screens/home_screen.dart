@@ -19,6 +19,7 @@ class HomeScreen extends ConsumerWidget {
   List<String> trainName = [];
 
   Map<String, List<StationStamp>> stationStampMap = {};
+  Map<String, List<StationStamp>> getStationStampMap = {};
 
   late BuildContext _context;
   late WidgetRef _ref;
@@ -112,10 +113,12 @@ class HomeScreen extends ConsumerWidget {
     trainName = [];
 
     stationStampMap = {};
+    getStationStampMap = {};
 
     final stationStampState = _ref.watch(stationStampProvider);
 
     var list = <StationStamp>[];
+    var list2 = <StationStamp>[];
 
     final keepTrain = <String>[];
     var keepTrainName = '';
@@ -123,11 +126,18 @@ class HomeScreen extends ConsumerWidget {
     stationStampState.forEach((element) {
       if (keepTrainName != element.trainName) {
         list = [];
+        list2 = [];
+      }
+
+      if (element.stampGetDate != '') {
+        list2.add(element);
       }
 
       list.add(element);
 
       stationStampMap[element.trainName] = list;
+
+      getStationStampMap[element.trainName] = list2;
 
       if (!keepTrain.contains(element.trainName)) {
         trainName.add(element.trainName);
@@ -153,7 +163,27 @@ class HomeScreen extends ConsumerWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(element),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(element),
+                DefaultTextStyle(
+                  style: TextStyle(
+                    color: (getStationStampMap[element]!.length ==
+                            stationStampMap[element]!.length)
+                        ? Colors.yellowAccent
+                        : Colors.white,
+                  ),
+                  child: Row(
+                    children: [
+                      Text(getStationStampMap[element]!.length.toString()),
+                      const Text(' / '),
+                      Text(stationStampMap[element]!.length.toString()),
+                    ],
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: 10),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -182,7 +212,9 @@ class HomeScreen extends ConsumerWidget {
             _ref.watch(stationProvider.notifier).getStation(data: data);
           },
           child: CircleAvatar(
-            backgroundColor: _utility.getTrainColor(trainName: data.trainName),
+            backgroundColor: (data.stampGetDate == '')
+                ? Colors.black.withOpacity(0.3)
+                : _utility.getTrainColor(trainName: data.trainName),
             radius: 30,
             child: CircleAvatar(
               radius: 28,

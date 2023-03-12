@@ -38,12 +38,18 @@ class StationInfoAlert extends ConsumerWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      stamp.trainName,
+                    DefaultTextStyle(
                       style: TextStyle(
                         color: _utility.getTrainColor(
                           trainName: stamp.trainName,
                         ),
+                      ),
+                      child: Row(
+                        children: [
+                          Text(stamp.trainName),
+                          const SizedBox(width: 20),
+                          Text(stamp.imageCode),
+                        ],
                       ),
                     ),
                     Text(stamp.stationName),
@@ -63,13 +69,7 @@ class StationInfoAlert extends ConsumerWidget {
                   color: Colors.white.withOpacity(0.4),
                   thickness: 2,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(),
-                    Text(stamp.posterPosition),
-                  ],
-                ),
+                Text(stamp.posterPosition),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
