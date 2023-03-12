@@ -78,3 +78,30 @@ class StationStampNotGetNotifier extends StateNotifier<List<NotGet>> {
 }
 
 ////////////////////////////////////////////////
+
+////////////////////////////////////////////////
+final stationProvider =
+    StateNotifierProvider.autoDispose<StationNotifier, StationStamp>((ref) {
+  return StationNotifier(StationStamp(
+    trainCode: '',
+    trainName: '',
+    stationCode: '',
+    stationName: '',
+    lat: '',
+    lng: '',
+    imageFolder: '',
+    imageCode: '',
+    posterPosition: '',
+    stampGetDate: '',
+  ));
+});
+
+class StationNotifier extends StateNotifier<StationStamp> {
+  StationNotifier(super.state);
+
+  Future<void> getStation({required StationStamp data}) async {
+    state = data;
+  }
+}
+
+////////////////////////////////////////////////

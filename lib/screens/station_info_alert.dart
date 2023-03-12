@@ -3,11 +3,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../extensions/extensions.dart';
 import '../model/station_stamp.dart';
+import '../utility/utility.dart';
 
 class StationInfoAlert extends ConsumerWidget {
-  const StationInfoAlert({super.key, required this.stamp});
+  StationInfoAlert({super.key, required this.stamp});
 
   final StationStamp stamp;
+
+  final Utility _utility = Utility();
 
   ///
   @override
@@ -35,8 +38,15 @@ class StationInfoAlert extends ConsumerWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                      stamp.trainName,
+                      style: TextStyle(
+                        color: _utility.getTrainColor(
+                          trainName: stamp.trainName,
+                        ),
+                      ),
+                    ),
                     Text(stamp.stationName),
-                    Text(stamp.trainName),
                   ],
                 ),
                 Divider(
@@ -52,6 +62,13 @@ class StationInfoAlert extends ConsumerWidget {
                 Divider(
                   color: Colors.white.withOpacity(0.4),
                   thickness: 2,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(),
+                    Text(stamp.posterPosition),
+                  ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
